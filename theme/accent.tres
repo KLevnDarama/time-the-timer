@@ -9,43 +9,35 @@ corner_radius_bottom_left = 11
 shadow_color = Color(0, 0, 0, 0.19215687)
 shadow_size = 3
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skbvl"]
-bg_color = Color(0.99215686, 0.99215686, 0.9843137, 1)
-corner_radius_top_left = 11
-corner_radius_top_right = 11
-corner_radius_bottom_right = 11
-corner_radius_bottom_left = 11
-shadow_color = Color(0, 0, 0, 0.19215687)
-shadow_size = 3
-shadow_offset = Vector2(0, 3)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j8etk"]
-bg_color = Color(1, 0.81960785, 0.32941177, 1)
-corner_radius_top_left = 11
-corner_radius_top_right = 11
-corner_radius_bottom_right = 11
-corner_radius_bottom_left = 11
-shadow_color = Color(0, 0, 0, 0.19215687)
-shadow_size = 3
-shadow_offset = Vector2(0, 6)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5lff8"]
-bg_color = Color(0.2, 0.2, 0.2, 1)
+bg_color = Color(1, 0.81960785, 0.32941177, 1)
+border_width_bottom = 8
+border_color = Color(0.87, 0.57855, 0.2871, 1)
 corner_radius_top_left = 11
 corner_radius_top_right = 11
 corner_radius_bottom_right = 11
 corner_radius_bottom_left = 11
-shadow_color = Color(0, 0, 0, 0.19215687)
-shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th8s5"]
+bg_color = Color(1, 0.81960785, 0.32941177, 1)
+border_width_top = 8
+border_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
 
 [resource]
 Button/colors/font_color = Color(0.2, 0.2, 0.2, 1)
 Button/colors/font_disabled_color = Color(0, 0, 0, 0.5019608)
 Button/colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 Button/colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+Button/colors/font_hover_pressed_color = Color(0.2, 0.2, 0.2, 1)
+Button/colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
 Button/fonts/font = null
 Button/styles/disabled = SubResource("StyleBoxFlat_p0hk7")
-Button/styles/hover = SubResource("StyleBoxFlat_skbvl")
-Button/styles/normal = SubResource("StyleBoxFlat_j8etk")
-Button/styles/pressed = SubResource("StyleBoxFlat_5lff8")
+Button/styles/hover = SubResource("StyleBoxFlat_5lff8")
+Button/styles/hover_pressed = SubResource("StyleBoxFlat_th8s5")
+Button/styles/normal = SubResource("StyleBoxFlat_5lff8")
+Button/styles/pressed = SubResource("StyleBoxFlat_th8s5")
 Label/fonts/font = null
