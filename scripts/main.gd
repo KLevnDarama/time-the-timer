@@ -44,6 +44,17 @@ func set_session(state: SessionState) -> SessionState:
 		_:
 			return SessionState.IDLE
 
+func set_input() -> void:
+	match currentSession:
+		SessionState.IDLE:
+			currentSession = set_session(SessionState.TIMING)
+		SessionState.TIMING:
+			currentSession = set_session(SessionState.RESULT)
+		SessionState.RESULT:
+			currentSession = set_session(SessionState.IDLE)
+		_:
+			currentSession = set_session(SessionState.IDLE)
+
 func _ready() -> void:
 	currentSession = set_session(SessionState.IDLE)
 
@@ -61,13 +72,8 @@ func _process(delta: float) -> void:
 			dingDebounce = false
 
 func _on_main_button_down() -> void:
-	match currentSession:
-		SessionState.IDLE:
-			currentSession = set_session(SessionState.TIMING)
-		SessionState.TIMING:
-			currentSession = set_session(SessionState.RESULT)
-		SessionState.RESULT:
-			currentSession = set_session(SessionState.IDLE)
-		_:
-			currentSession = set_session(SessionState.IDLE)
-	
+	set_input()
+
+#func _input(event: InputEvent) -> void:
+	#if event.is_action_pressed("ui_accept"):
+		#set_input()
