@@ -5,7 +5,7 @@ extends ColorRect
 @onready var hint: Label = $Hint
 @onready var ding_sound: AudioStreamPlayer = $"../DingSound"
 
-@export var hintTime = 3250
+var hintTime = 3500
 
 var timeSession = 0
 var timeTarget = 0
@@ -33,7 +33,7 @@ func set_session(state: SessionState) -> SessionState:
 			var deltaTarget = timeStopped - (timeSession + timeTarget)
 			guide.text = "You stopped at %.2fs" % (deltaSession/1000.0)
 			main_button.text = "Retry"
-			#hint.text = "Offset by %.fms" % deltaTarget
+			hint.modulate.a = 1
 			if deltaTarget < 0:
 				hint.text = "Early by %.fms" % abs(deltaTarget)
 			elif deltaTarget > 0:
@@ -50,6 +50,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if currentSession == SessionState.TIMING:
 		var deltaHint = Time.get_ticks_msec() - timeSession
+		ding_sound.volume_db = remap(deltaHint,0,hintTime,0,-30)
+		hint.modulate.a = remap(deltaHint,0,hintTime,1,0)
 		hint.text = "%.2f" % (deltaHint/1000.0) if deltaHint <= hintTime else ""
 		if deltaHint <= hintTime and deltaHint % 1000 < 100 and not dingDebounce:
 			dingDebounce = true
