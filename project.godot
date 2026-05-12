@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Time the Timer"
+run/main_scene="uid://cuix7354mbqmp"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/show_image=false
 config/icon="res://icon.svg"

@@ -22,7 +22,7 @@ func set_session(state: SessionState) -> SessionState:
 			return SessionState.IDLE
 		SessionState.TIMING:
 			timeSession = Time.get_ticks_msec()
-			timeTarget = randi_range(5000, 7000)
+			timeTarget = randi_range(500, 700) * 10
 			main_label.text = "Count to %.2fs" % (timeTarget/1000.0)
 			main_button.text = "Stop"
 			return SessionState.TIMING
