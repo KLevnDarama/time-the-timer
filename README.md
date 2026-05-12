@@ -25,11 +25,11 @@ Windows and Linux releases are available in the here:
 
 [<img src="https://img.shields.io/badge/DOWNLOAD%20LATEST%20RELEASE-2ea44f?style=for-the-badge&logo=github" alt="Download Button">](https://github.com/KLevnDarama/time-the-timer/releases/tag/stable)
 
-## Instructions
+### Instructions
 <details open>
   <summary>For Windows</summary>
   
-  Download the latest release with the `*.exe` extension file, put it somewhere in your folder, and run the `.exe` file.
+  Download the latest release, extract the `*.zip` file, and run the `.exe` file.
   
   When it prompts "Windows protected your PC", click the "More info" and click "Run anyway".
 
@@ -39,7 +39,7 @@ Windows and Linux releases are available in the here:
 <details>
   <summary>For Linux</summary>
 
-  Download the latest release with the `*.x86_64` extension file, put it somewhere in your directory, and run the `.x86_64` file.
+  Download the latest release, extract the `*.tar.gz` fule, and run the `.x86_64` file.
 
   I believe this works on every distribution, though i haven't tested anything else besides my own.
 </details>
