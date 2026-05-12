@@ -1,15 +1,14 @@
-extends ColorRect
+extends VBoxContainer
 
-@onready var main_button: Button = $MainButton
-@onready var guide: Label = $Guide
-@onready var hint: Label = $Hint
-@onready var ding_sound: AudioStreamPlayer = $"../DingSound"
+@onready var tick_sound: AudioStreamPlayer = $TickSound
+@onready var main_label: Label = $MainLabel
+@onready var main_button: Button = $ButtonContainer/MainButton
+@onready var hint_label: Label = $HintLabel
 
 var hintTime = 3500
-
 var timeSession = 0
 var timeTarget = 0
-var dingDebounce = false
+var tickDebounce = false
 
 enum SessionState { IDLE, TIMING, RESULT }
 var currentSession = SessionState.IDLE
@@ -17,29 +16,29 @@ var currentSession = SessionState.IDLE
 func set_session(state: SessionState) -> SessionState:
 	match state:
 		SessionState.IDLE:
-			guide.text = "Start counting?"
+			main_label.text = "Start counting?"
 			main_button.text = "Ready"
-			hint.text = "Time the Timer"
+			hint_label.text = "Time the Timer"
 			return SessionState.IDLE
 		SessionState.TIMING:
 			timeSession = Time.get_ticks_msec()
 			timeTarget = randi_range(5000, 7000)
-			guide.text = "Count to %.2fs" % (timeTarget/1000.0)
+			main_label.text = "Count to %.2fs" % (timeTarget/1000.0)
 			main_button.text = "Stop"
 			return SessionState.TIMING
 		SessionState.RESULT:
 			var timeStopped = Time.get_ticks_msec()
 			var deltaSession = timeStopped - timeSession
 			var deltaTarget = timeStopped - (timeSession + timeTarget)
-			guide.text = "You stopped at %.2fs" % (deltaSession/1000.0)
+			main_label.text = "You stopped at %.2fs" % (deltaSession/1000.0)
 			main_button.text = "Retry"
-			hint.modulate.a = 1
+			hint_label.modulate.a = 1
 			if deltaTarget < 0:
-				hint.text = "Early by %.fms" % abs(deltaTarget)
+				hint_label.text = "Early by %.fms" % abs(deltaTarget)
 			elif deltaTarget > 0:
-				hint.text = "Late by %.fms" % deltaTarget
+				hint_label.text = "Late by %.fms" % deltaTarget
 			else:
-				hint.text = "Perfect timing"
+				hint_label.text = "Perfect timing"
 			return SessionState.RESULT
 		_:
 			return SessionState.IDLE
@@ -58,22 +57,22 @@ func set_input() -> void:
 func _ready() -> void:
 	currentSession = set_session(SessionState.IDLE)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if currentSession == SessionState.TIMING:
 		var deltaHint = Time.get_ticks_msec() - timeSession
-		ding_sound.volume_db = remap(deltaHint,0,hintTime,0,-30)
-		hint.modulate.a = remap(deltaHint,0,hintTime,1,0)
-		hint.text = "%.2f" % (deltaHint/1000.0) if deltaHint <= hintTime else ""
-		if deltaHint <= hintTime and deltaHint % 1000 < 100 and not dingDebounce:
-			dingDebounce = true
-			ding_sound.play()
+		tick_sound.volume_db = remap(deltaHint,0,hintTime,0,-30)
+		hint_label.modulate.a = remap(deltaHint,0,hintTime,1,0)
+		hint_label.text = "%.2f" % (deltaHint/1000.0) if deltaHint <= hintTime else ""
+		if deltaHint <= hintTime and deltaHint % 1000 < 100 and not tickDebounce:
+			tickDebounce = true
+			tick_sound.play()
 		
 		if deltaHint % 1000 > 100:
-			dingDebounce = false
-
-func _on_main_button_down() -> void:
-	set_input()
+			tickDebounce = false
 
 #func _input(event: InputEvent) -> void:
 	#if event.is_action_pressed("ui_accept"):
 		#set_input()
+
+func _on_main_button_down() -> void:
+	set_input()
